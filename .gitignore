@@ -1,0 +1,5 @@
+client-6/node_modules
+webapp-6/node_modules
+
+.env
+webapp-6/.env
