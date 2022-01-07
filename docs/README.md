@@ -26,12 +26,19 @@
 $ docker run       --name postgres       -e POSTGRES_PASSWORD=password       -p 5432:5432       -d postgres
 
 ### User Routes
-- Register
-- Login
-- GetUserById
+- Register    :done
+- Login       :done
+- GetUserById :
 
 ### Transaction Routes
-- Create Tranaction 
-- Get All transaction by user
+- Create Tranaction                       : done
+- Get All transaction by user             :done
 - get Transaction By Id
+- update transaction by Id
 - Delete Transaction
+
+
+
+MY NOTES
+
+When i get all the transactions of a perticular user, i want to populate the data with the party name and username 

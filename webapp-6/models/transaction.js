@@ -22,7 +22,6 @@ const Transaction = db.define('Transaction', {
       },
     },
   },
-  partyUsername: DataTypes.STRING,
   partyId: DataTypes.UUID,
 });
 

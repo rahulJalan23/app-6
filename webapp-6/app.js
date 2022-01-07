@@ -13,7 +13,10 @@ app.use(express.urlencoded({ extended: false }));
 const { login, register } = require('./controllers/auth');
 const {
   addTransaction,
+  editTransactionById,
   getTransactionByUser,
+  getTransactionById,
+  deleteTransactionById,
 } = require('./controllers/transaction');
 
 app.use(morgan('dev'));
@@ -22,7 +25,10 @@ app.post('/auth/login', login);
 app.post('/auth/register', register);
 
 app.post('/transaction/create', authMiddleware, addTransaction);
-app.post('/transaction/get', authMiddleware, getTransactionByUser);
+app.get('/transaction/get', authMiddleware, getTransactionByUser);
+app.get('/transaction/:id', authMiddleware, getTransactionById);
+app.put('/transaction/:id', authMiddleware, editTransactionById);
+app.delete('/transaction/:id', authMiddleware, deleteTransactionById);
 
 app.get('/', (_req, res) => {
   res.status(200).json({

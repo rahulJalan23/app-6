@@ -1,16 +1,31 @@
-const { Transaction } = require('../models/index');
+const { Transaction, User } = require('../models/index');
 
 const addTransaction = async (req, res) => {
   try {
-    const trans = await Transaction.create({
-      amount: req.body.amount,
-      type: req.body.type,
+    const { amount, type, party_username } = req.body;
+
+    const findParty = await User.findOne({
+      where: { username: party_username },
     });
+    let trans = null;
+    if (findParty) {
+      trans = await Transaction.create({
+        amount,
+        type,
+        partyId: findParty.id,
+      });
+    } else {
+      return res.status(400).send({
+        success: false,
+        msg: 'No party with the given username exists. Try Again.',
+      });
+    }
+
     await trans.setUser(req.user);
     return res.json({
       success: true,
       message: 'Transaction created successfully.',
-      trans,
+      transaction: trans,
     });
   } catch (err) {
     console.log(err);
@@ -18,24 +33,26 @@ const addTransaction = async (req, res) => {
   }
 };
 
-const editBook = (req, res) => {
-  return Book.findOneAndUpdate(
-    { _id: req.params.id },
-    {
-      $set: {
-        category: req.body.category,
-        title: req.body.title,
-        description: req.body.description,
+const editTransactionById = async (req, res) => {
+  try {
+    const trans = await Transaction.findOne({
+      where: {
+        id: req.params.id,
       },
-    },
-    { new: true },
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-      return res.json(result);
-    }
-  );
+    });
+    if (!trans) throw new Error('No such Transaction Found.');
+
+    trans.amount = req.body.amount;
+
+    await trans.save();
+
+    return res.send({
+      success: true,
+      transaction: trans,
+    });
+  } catch (err) {
+    res.status(400).send({ success: false, error: err });
+  }
 };
 
 const getTransactionByUser = async (req, res) => {
@@ -44,37 +61,52 @@ const getTransactionByUser = async (req, res) => {
 
   // const startindex = (page - 1) * limit;
   const user = req.user;
-  const transList = await user.getTransactions();
-  res.send(transList);
-};
-
-const getBookById = (req, res) => {
-  Book.findOne({ _id: req.params.id }, (err, result) => {
-    if (err) return res.status(403).send(err);
-    return res.send(result);
+  let transList = await user.getTransactions();
+  let modifiedList = await transList.map(async (trans) => {
+    const party = await User.findOne({ where: { id: trans.partyId } });
+    // console.log(party);
+    return { party, ...trans.dataValues };
+  });
+  return Promise.all(modifiedList).then((values) => {
+    return res.send({ success: true, transactions: values });
   });
 };
 
-const deleteBook = (req, res) => {
-  Book.findOneAndDelete(
-    {
-      _id: req.params.id,
-    },
-    (err, result) => {
-      if (err) return res.json(err);
-      if (result) {
-        console.log(result);
-        return res.json({ msg: 'Book deleted', success: true });
-      }
-      return res.json({ msg: 'Book not deleted', success: false });
-    }
-  );
+const getTransactionById = async (req, res) => {
+  try {
+    const trans = await Transaction.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (!trans) throw new Error('No such Transaction Found.');
+    return res.send({
+      success: true,
+      transaction: trans,
+    });
+  } catch (err) {
+    res.status(400).send({ success: false, error: err });
+  }
+};
+
+const deleteTransactionById = async (req, res) => {
+  try {
+    const trans = await Transaction.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    await trans.destroy();
+    res.send({ success: true, message: 'Transaction Deleted Successfully.' });
+  } catch (err) {
+    res.status(400).send({ success: false, error: err });
+  }
 };
 
 module.exports = {
   addTransaction,
-  editBook,
+  editTransactionById,
   getTransactionByUser,
-  getBookById,
-  deleteBook,
+  getTransactionById,
+  deleteTransactionById,
 };

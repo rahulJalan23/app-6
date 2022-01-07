@@ -1,0 +1,251 @@
+{
+	"info": {
+		"_postman_id": "b4788cdf-06ee-438d-bee8-bec35e89e7d3",
+		"name": "webapp-6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Add Transaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1YjUxZmZjLWI5YzQtNGU2NC1iNTgyLTA5MDNhMjIxZmUyMiIsImlhdCI6MTY0MTU3ODUzN30.WlROheV2XSLONOMAG8FivxlPzaO5Ef3VLh51UtFgF0I",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 5000,\r\n    \"type\":\"paid\",\r\n    \"party_username\":\"rahuljalan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/transaction/create",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"transaction",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction By UserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1YjUxZmZjLWI5YzQtNGU2NC1iNTgyLTA5MDNhMjIxZmUyMiIsImlhdCI6MTY0MTU3ODUzN30.WlROheV2XSLONOMAG8FivxlPzaO5Ef3VLh51UtFgF0I",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN}}/transaction/get",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"transaction",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1YjUxZmZjLWI5YzQtNGU2NC1iNTgyLTA5MDNhMjIxZmUyMiIsImlhdCI6MTY0MTU3ODUzN30.WlROheV2XSLONOMAG8FivxlPzaO5Ef3VLh51UtFgF0I",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN}}/transaction/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"transaction",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d28eb183-5aa4-48f0-b65c-8e0ac5a6af25"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction By Id Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1YjUxZmZjLWI5YzQtNGU2NC1iNTgyLTA5MDNhMjIxZmUyMiIsImlhdCI6MTY0MTU3ODUzN30.WlROheV2XSLONOMAG8FivxlPzaO5Ef3VLh51UtFgF0I",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{DOMAIN}}/transaction/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"transaction",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "9993d72f-d6ab-49fc-95de-7296b398d3f1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction By Id Copy 2",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-access-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU1YjUxZmZjLWI5YzQtNGU2NC1iNTgyLTA5MDNhMjIxZmUyMiIsImlhdCI6MTY0MTU3ODUzN30.WlROheV2XSLONOMAG8FivxlPzaO5Ef3VLh51UtFgF0I",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{DOMAIN}}/transaction/:id",
+							"host": [
+								"{{DOMAIN}}"
+							],
+							"path": [
+								"transaction",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "d28eb183-5aa4-48f0-b65c-8e0ac5a6af25"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"rahuljalan\",\r\n    \"password\":\"rahuljalan\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/auth/login",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"rahuljalan\",\r\n    \"password\":\"rahuljalan\",\r\n    \"name\":\"rahululj\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{DOMAIN}}/auth/register",
+					"host": [
+						"{{DOMAIN}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DOMAIN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

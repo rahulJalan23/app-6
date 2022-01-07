@@ -14,11 +14,16 @@ const login = async (req, res) => {
       }
 
       if (ismatch) {
-        const token = await jwt.sign({ id: userfind.id }, SECRET_JWT);
+        const token = jwt.sign({ id: userfind.id }, SECRET_JWT);
         // console.log('loggin in');
         // console.log(token);
         res.setHeader('token', token);
-        res.send({ token, success: true, user: userfind });
+        res.send({
+          success: true,
+          message: 'User Logged In Successfully.',
+          token,
+          user: userfind,
+        });
       } else {
         res.json({ msg: 'password incorrect' });
       }
@@ -39,7 +44,7 @@ const register = async (req, res) => {
       },
     });
     if (test) {
-      return res.send({ msg: 'User exists with the username' });
+      return res.status(400).send({ msg: 'User exists with the username' });
     }
     User.create({
       username: req.body.username,
@@ -47,10 +52,15 @@ const register = async (req, res) => {
       password: req.body.password,
     })
       .then(async (user) => {
-        const token = await jwt.sign({ id: user.id }, SECRET_JWT);
+        const token = jwt.sign({ id: user.id }, SECRET_JWT);
         res
           .status(201)
-          .send({ message: 'User Registered Successfully.', user, token });
+          .send({
+            success: true,
+            message: 'User Registered Successfully.',
+            user,
+            token,
+          });
       })
       .catch((err) => {
         console.log(err);
