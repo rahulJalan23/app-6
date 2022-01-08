@@ -19,6 +19,7 @@ const User = db.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+    select: false,
   },
 });
 
